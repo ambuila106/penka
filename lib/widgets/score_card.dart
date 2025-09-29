@@ -61,7 +61,11 @@ class ScoreCard extends StatelessWidget {
       child: Center(
         child: Text(
           '$score',
-          style: const TextStyle(color: Colors.white, fontSize: 24),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold
+          ),
         ),
       ),
     );
@@ -77,6 +81,7 @@ Widget _buildInputScore(int score) {
         style: TextStyle(
           color: Colors.white,
           fontSize: 20,
+          fontWeight: FontWeight.bold
         ),
         decoration: InputDecoration(
           isDense: true,

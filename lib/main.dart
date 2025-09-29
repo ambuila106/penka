@@ -55,90 +55,173 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+
+
+
+  @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         toolbarHeight: 70,
         backgroundColor: Colors.black,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Image.asset(
           'assets/logo-penka.png',
-          height: 40, // controla el tamaño
+          height: 40,
         ),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              ScoreCard(
-                leftTeamSrc: 'assets/arg.png',
-                rightTeamSrc: 'assets/bra.png',
-                leftScore: 2,
-                rightScore: 1,
-              ),
-              Divider(
-                height: 10,
-                color: Colors.grey[600],
-              ),
-              ScoreCard(
-                leftTeamSrc: 'assets/col.png',
-                rightTeamSrc: 'assets/chi.png',
-                leftScore: 3,
-                rightScore: 1,
-              ),
-              Divider(
-                height: 10,
-                color: Colors.grey[600],
-              ),
-              ScoreCard(
-                leftTeamSrc: 'assets/col.png',
-                rightTeamSrc: 'assets/chi.png',
-                leftScore: 3,
-                rightScore: 1,
-              ),
-              const Text('You have pushed the button this many times:'),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: Colors.yellow[800],
+          labelColor: Colors.yellow[800],
+          labelStyle: TextStyle( // active tab text style
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+          unselectedLabelColor: Colors.grey,
+          tabs: const [
+            Tab(
+              text: 'To play',
+            ),
+            Tab(text: 'Result'),
           ],
         ),
-        )
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          // To play tab content
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  ScoreCard(
+                    leftTeamSrc: 'assets/arg.png',
+                    rightTeamSrc: 'assets/bra.png',
+                    leftScore: 2,
+                    rightScore: 1,
+                  ),
+                  Divider(
+                    height: 10,
+                    color: Colors.grey[600],
+                  ),
+                  ScoreCard(
+                    leftTeamSrc: 'assets/col.png',
+                    rightTeamSrc: 'assets/chi.png',
+                    leftScore: 3,
+                    rightScore: 1,
+                  ),
+                  Divider(
+                    height: 10,
+                    color: Colors.grey[600],
+                  ),
+                  ScoreCard(
+                    leftTeamSrc: 'assets/col.png',
+                    rightTeamSrc: 'assets/chi.png',
+                    leftScore: 3,
+                    rightScore: 1,
+                  ),
+                  Divider(
+                    height: 10,
+                    color: Colors.grey[600],
+                  ),
+                  ScoreCard(
+                    leftTeamSrc: 'assets/col.png',
+                    rightTeamSrc: 'assets/chi.png',
+                    leftScore: 3,
+                    rightScore: 1,
+                  ),
+                  Divider(
+                    height: 10,
+                    color: Colors.grey[600],
+                  ),
+                  ScoreCard(
+                    leftTeamSrc: 'assets/col.png',
+                    rightTeamSrc: 'assets/chi.png',
+                    leftScore: 3,
+                    rightScore: 1,
+                  ),
+                  Divider(
+                    height: 10,
+                    color: Colors.grey[600],
+                  ),
+                  ScoreCard(
+                    leftTeamSrc: 'assets/col.png',
+                    rightTeamSrc: 'assets/chi.png',
+                    leftScore: 3,
+                    rightScore: 1,
+                  ),
+                  Divider(
+                    height: 10,
+                    color: Colors.grey[600],
+                  ),
+                  ScoreCard(
+                    leftTeamSrc: 'assets/col.png',
+                    rightTeamSrc: 'assets/chi.png',
+                    leftScore: 3,
+                    rightScore: 1,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Result tab content
+          const Center(
+            child: ResultView(),
+          ),
+        ],
+      ),
+
+    );
+  }
+}
+
+class ResultView extends StatelessWidget {
+  const ResultView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.emoji_events,
+          size: 80,
+          color: Colors.amber,
+        ),
+        SizedBox(height: 20),
+        Text(
+          'Results',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 10),
+        Text(
+          'Game results will appear here',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.grey,
+          ),
+        ),
+      ],
     );
   }
 }
