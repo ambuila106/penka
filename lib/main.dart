@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 import 'package:penka/widgets/score_card.dart';
+import 'package:penka/models/match.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,11 +60,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  List<Match> matches = [];
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _loadMatches();
   }
 
   @override
@@ -70,8 +76,23 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     super.dispose();
   }
 
-
-
+  Future<void> _loadMatches() async {
+    try {
+      final String response = await rootBundle.loadString('assets/matches.json');
+      final Map<String, dynamic> data = json.decode(response);
+      final List<dynamic> matchesJson = data['matches'];
+      
+      setState(() {
+        matches = matchesJson.map((json) => Match.fromJson(json)).toList();
+        isLoading = false;
+      });
+    } catch (e) {
+      print('Error loading matches: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           controller: _tabController,
           indicatorColor: Colors.yellow[800],
           labelColor: Colors.yellow[800],
-          labelStyle: TextStyle( // active tab text style
+          labelStyle: const TextStyle( // active tab text style
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -104,89 +125,37 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         controller: _tabController,
         children: [
           // To play tab content
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  ScoreCard(
-                    leftTeamSrc: 'assets/arg.png',
-                    rightTeamSrc: 'assets/bra.png',
-                    leftScore: 2,
-                    rightScore: 1,
+          isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.deepPurple,
                   ),
-                  Divider(
-                    height: 10,
-                    color: Colors.grey[600],
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListView.separated(
+                    itemCount: matches.length,
+                    separatorBuilder: (context, index) => Divider(
+                      height: 10,
+                      color: Colors.grey[600],
+                    ),
+                    itemBuilder: (context, index) {
+                      final match = matches[index];
+                      return ScoreCard(
+                        leftTeamSrc: match.leftTeam.flag,
+                        rightTeamSrc: match.rightTeam.flag,
+                        leftScore: match.leftTeam.score,
+                        rightScore: match.rightTeam.score,
+                      );
+                    },
                   ),
-                  ScoreCard(
-                    leftTeamSrc: 'assets/col.png',
-                    rightTeamSrc: 'assets/chi.png',
-                    leftScore: 3,
-                    rightScore: 1,
-                  ),
-                  Divider(
-                    height: 10,
-                    color: Colors.grey[600],
-                  ),
-                  ScoreCard(
-                    leftTeamSrc: 'assets/col.png',
-                    rightTeamSrc: 'assets/chi.png',
-                    leftScore: 3,
-                    rightScore: 1,
-                  ),
-                  Divider(
-                    height: 10,
-                    color: Colors.grey[600],
-                  ),
-                  ScoreCard(
-                    leftTeamSrc: 'assets/col.png',
-                    rightTeamSrc: 'assets/chi.png',
-                    leftScore: 3,
-                    rightScore: 1,
-                  ),
-                  Divider(
-                    height: 10,
-                    color: Colors.grey[600],
-                  ),
-                  ScoreCard(
-                    leftTeamSrc: 'assets/col.png',
-                    rightTeamSrc: 'assets/chi.png',
-                    leftScore: 3,
-                    rightScore: 1,
-                  ),
-                  Divider(
-                    height: 10,
-                    color: Colors.grey[600],
-                  ),
-                  ScoreCard(
-                    leftTeamSrc: 'assets/col.png',
-                    rightTeamSrc: 'assets/chi.png',
-                    leftScore: 3,
-                    rightScore: 1,
-                  ),
-                  Divider(
-                    height: 10,
-                    color: Colors.grey[600],
-                  ),
-                  ScoreCard(
-                    leftTeamSrc: 'assets/col.png',
-                    rightTeamSrc: 'assets/chi.png',
-                    leftScore: 3,
-                    rightScore: 1,
-                  ),
-                ],
-              ),
-            ),
-          ),
+                ),
           // Result tab content
           const Center(
             child: ResultView(),
           ),
         ],
       ),
-
     );
   }
 }

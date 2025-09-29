@@ -1,0 +1,88 @@
+{
+  "matches": [
+    {
+      "id": 1,
+      "leftTeam": {
+        "name": "Argentina",
+        "flag": "assets/arg.png",
+        "score": 2
+      },
+      "rightTeam": {
+        "name": "Brazil", 
+        "flag": "assets/bra.png",
+        "score": 1
+      },
+      "status": "finished"
+    },
+    {
+      "id": 2,
+      "leftTeam": {
+        "name": "Colombia",
+        "flag": "assets/col.png",
+        "score": 3
+      },
+      "rightTeam": {
+        "name": "Chile",
+        "flag": "assets/chi.png", 
+        "score": 1
+      },
+      "status": "finished"
+    },
+    {
+      "id": 3,
+      "leftTeam": {
+        "name": "Colombia",
+        "flag": "assets/col.png",
+        "score": 3
+      },
+      "rightTeam": {
+        "name": "Chile",
+        "flag": "assets/chi.png",
+        "score": 1
+      },
+      "status": "finished"
+    },
+    {
+      "id": 4,
+      "leftTeam": {
+        "name": "Colombia",
+        "flag": "assets/col.png",
+        "score": 3
+      },
+      "rightTeam": {
+        "name": "Chile",
+        "flag": "assets/chi.png",
+        "score": 1
+      },
+      "status": "finished"
+    },
+    {
+      "id": 5,
+      "leftTeam": {
+        "name": "Colombia",
+        "flag": "assets/col.png",
+        "score": 3
+      },
+      "rightTeam": {
+        "name": "Chile",
+        "flag": "assets/chi.png",
+        "score": 1
+      },
+      "status": "finished"
+    },
+    {
+      "id": 6,
+      "leftTeam": {
+        "name": "Colombia",
+        "flag": "assets/col.png",
+        "score": 3
+      },
+      "rightTeam": {
+        "name": "Chile",
+        "flag": "assets/chi.png",
+        "score": 1
+      },
+      "status": "upcoming"
+    }
+  ]
+}
