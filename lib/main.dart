@@ -147,6 +147,14 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Acción del botón flotante
+        },
+        backgroundColor: Colors.yellow,
+        child: const Icon(Icons.menu),
+        shape: CircleBorder(), // ensures it's a circle
+      ),
       body: TabBarView(
         controller: _tabController,
         children: [
