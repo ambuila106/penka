@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:penka/widgets/score_card.dart';
 import 'package:penka/models/match.dart';
+import 'package:share_plus/share_plus.dart';
 
 void main() {
   runApp(const MyApp());
@@ -94,6 +95,13 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     }
   }
 
+  void _shareApp() {
+    Share.share(
+      'https://www.penka.io/',
+      subject: 'Check out Penka - Live Sports Scores!',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,6 +112,24 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           'assets/logo-penka.png',
           height: 40,
         ),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            decoration: BoxDecoration(
+              color: Colors.grey[900],
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: const Icon(
+                Icons.share,
+                color: Colors.white,
+                size: 20,
+              ),
+              onPressed: _shareApp,
+              tooltip: 'Share Penka',
+            ),
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.yellow[800],
